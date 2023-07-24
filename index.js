@@ -31,6 +31,8 @@ async function run() {
     // Db Collection Code Here---------------------
     const db = client.db("admision_club_bd");
     const userCollection = db.collection("users");
+    const myCollage = db.collection("my_collage");
+    const myAdmission = db.collection("my_admission");
 
     //All Get Oparation Code Here--------------
     app.get("/users", async (req, res) => {
@@ -44,6 +46,12 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/myCollage/:email", async (req, res) => {
+      const email = req.params.email;
+      const result = await myCollage.findOne({ email: email });
+      res.send(result);
+    });
+
     // All Post Oparation Code Here---------------------
     app.post("/users", async (req, res) => {
       const user = req.body;
@@ -53,6 +61,12 @@ async function run() {
         return res.send({ massage: "User Alrady Exist" });
       }
       const result = await userCollection.insertOne(user);
+      res.send(result);
+    });
+
+    app.post("/myAdmission", async (req, res) => {
+      const user = req.body;
+      const result = await myAdmission.insertOne(user);
       res.send(result);
     });
 
@@ -82,7 +96,7 @@ async function run() {
           status: body.status,
         },
       };
-      const result = await userCollection.updateOne(filter, updateDoc);
+      const result = await myAdmission.updateOne(filter, updateDoc);
       res.send(result);
     });
 
