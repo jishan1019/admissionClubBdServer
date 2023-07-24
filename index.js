@@ -31,12 +31,17 @@ async function run() {
     // Db Collection Code Here---------------------
     const db = client.db("admision_club_bd");
     const userCollection = db.collection("users");
-    const myCollage = db.collection("my_collage");
     const myAdmission = db.collection("my_admission");
+    const allCollage = db.collection("all_collage");
 
     //All Get Oparation Code Here--------------
     app.get("/users", async (req, res) => {
       const result = await userCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/allCollage", async (req, res) => {
+      const result = await allCollage.find().toArray();
       res.send(result);
     });
 
@@ -48,8 +53,8 @@ async function run() {
 
     app.get("/myCollage/:email", async (req, res) => {
       const email = req.params.email;
-      const result = await myCollage.findOne({ email: email });
-      res.send(result);
+      const results = await myAdmission.find({ email: email }).toArray();
+      res.send(results);
     });
 
     // All Post Oparation Code Here---------------------
