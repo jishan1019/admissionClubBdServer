@@ -91,28 +91,6 @@ async function run() {
       }
     });
 
-    app.put("/users/:email", async (req, res) => {
-      const email = req.params.email;
-      const body = req.body;
-      const filter = { email: email };
-      const updateDoc = {
-        $set: {
-          role: body.role,
-          status: body.status,
-        },
-      };
-      const result = await myAdmission.updateOne(filter, updateDoc);
-      res.send(result);
-    });
-
-    // All Delete Oparation Code Here---------------------
-    app.delete("/cart/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await cartCollection.deleteOne(query);
-      res.send(result);
-    });
-
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
